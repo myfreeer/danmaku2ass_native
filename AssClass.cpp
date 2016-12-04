@@ -217,11 +217,9 @@ void Ass::WriteToDisk(bool removeBottom){
         int s=0;
         if(r.find("[MROW]") != std::string::npos){
             bool Replaced = false;
-            for(int i=0;i < line*20;i++){
-                s=i;
+            for(int i=0;i < line*4;i++){
+                s=i%line;
                 double Time_Arrive_Border = (playbackTime + (double)duration_marquee) - act_time; // The time of first char reach left border of video
-                if(i>=line){for (int k=i;k>line;k-=line){s-=line;}}
-                if(s<0){s+=line;}
                 if(Time_Arrive_Border > rows_dismiss_time[i] && playbackTime > rows_visible_time[i]){
                     rows_dismiss_time[s] = playbackTime + (double) duration_marquee;
                     rows_visible_time[s] = playbackTime + act_time;
