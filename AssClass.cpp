@@ -214,18 +214,20 @@ void Ass::WriteToDisk(bool removeBottom){
         int playbackTime = iterator->first;
         double TextWidth = iterator->second.first + 2.0; // Add some space between texts
         double act_time = TextWidth / (((double)VideoWidth + TextWidth)/ (double)duration_marquee); // duration of last char visible on screen
-        
+        int s=0;
         if(r.find("[MROW]") != std::string::npos){
             bool Replaced = false;
-            for(int i=0;i < line;i++){
+            for(int i=0;i < line*20;i++){
+                s=i;
                 double Time_Arrive_Border = (playbackTime + (double)duration_marquee) - act_time; // The time of first char reach left border of video
-               // if(Time_Arrive_Border > rows_dismiss_time[i] && playbackTime > rows_visible_time[i]){
-                    rows_dismiss_time[i] = playbackTime + (double) duration_marquee;
-                    rows_visible_time[i] = playbackTime + act_time;
-                    r = ReplaceAll(r,"[MROW]",to_string(i*FontSize));
+                if(i>=line){for (int k=i;k>line;k-=line){s=k;}}
+                if(Time_Arrive_Border > rows_dismiss_time[i] && playbackTime > rows_visible_time[i]){
+                    rows_dismiss_time[s] = playbackTime + (double) duration_marquee;
+                    rows_visible_time[s] = playbackTime + act_time;
+                    r = ReplaceAll(r,"[MROW]",to_string(s*FontSize));
                     Replaced = true;
                     break;
-               // }
+                }
             }
             if(!Replaced){
                 r = "";
@@ -259,7 +261,7 @@ void Ass::WriteToDisk(bool removeBottom){
         
         if(r.length() < 10){
             Dropped_Rows++;
-            //continue;
+            continue;
         }
         
         out << r << endl;
