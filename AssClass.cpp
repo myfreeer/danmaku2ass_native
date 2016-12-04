@@ -219,13 +219,13 @@ void Ass::WriteToDisk(bool removeBottom){
             bool Replaced = false;
             for(int i=0;i < line;i++){
                 double Time_Arrive_Border = (playbackTime + (double)duration_marquee) - act_time; // The time of first char reach left border of video
-                if(Time_Arrive_Border > rows_dismiss_time[i] && playbackTime > rows_visible_time[i]){
+               // if(Time_Arrive_Border > rows_dismiss_time[i] && playbackTime > rows_visible_time[i]){
                     rows_dismiss_time[i] = playbackTime + (double) duration_marquee;
                     rows_visible_time[i] = playbackTime + act_time;
                     r = ReplaceAll(r,"[MROW]",to_string(i*FontSize));
                     Replaced = true;
                     break;
-                }
+               // }
             }
             if(!Replaced){
                 r = "";
@@ -241,9 +241,9 @@ void Ass::WriteToDisk(bool removeBottom){
             }
             r = ReplaceAll(r,"[TopROW]",to_string(TopROW*FontSize));
         }else if(r.find("[BottomROW]") != std::string::npos){
-            if(removeBottom){
-                continue;
-            }else{
+           // if(removeBottom){
+            //    continue;
+            //}else{
                 float timeago =  iterator->first - BottomTime;
                 if(timeago > duration_still){
                     BottomROW = 0;
@@ -252,14 +252,14 @@ void Ass::WriteToDisk(bool removeBottom){
                     BottomROW++;
                 }
                 r = ReplaceAll(r,"[BottomROW]",to_string(VideoHeight-BottomROW*FontSize));
-            }
+          //  }
         }else{
             continue;
         }
         
         if(r.length() < 10){
             Dropped_Rows++;
-            continue;
+            //continue;
         }
         
         out << r << endl;
