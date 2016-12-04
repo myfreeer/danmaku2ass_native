@@ -217,19 +217,18 @@ void Ass::WriteToDisk(bool removeBottom){
         int s=0;
         if(r.find("[MROW]") != std::string::npos){
             bool Replaced = false;
-            for(int i=0;i < line*4;i++){
-                s=i%line;
+            for(int i=0;i < line;i++){
                 double Time_Arrive_Border = (playbackTime + (double)duration_marquee) - act_time; // The time of first char reach left border of video
                 if(Time_Arrive_Border > rows_dismiss_time[i] && playbackTime > rows_visible_time[i]){
-                    rows_dismiss_time[s] = playbackTime + (double) duration_marquee;
-                    rows_visible_time[s] = playbackTime + act_time;
-                    r = ReplaceAll(r,"[MROW]",to_string(s*FontSize));
+                    rows_dismiss_time[i] = playbackTime + (double) duration_marquee;
+                    rows_visible_time[i] = playbackTime + act_time;
+                    r = ReplaceAll(r,"[MROW]",to_string(i*FontSize));
                     Replaced = true;
                     break;
                 }
             }
             if(!Replaced){
-                r = "";
+               // r = "";
                 Dropped_Rows++;
             }
         }else if(r.find("[TopROW]") != std::string::npos){
