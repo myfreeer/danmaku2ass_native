@@ -212,7 +212,7 @@ void Ass::WriteToDisk(bool removeBottom){
         string r = iterator->second.second;
         
         int playbackTime = iterator->first;
-        double TextWidth = iterator->second.first + 2.0; // Add some space between texts
+        double TextWidth = iterator->second.first + 0.5; // Add some space between texts
         double act_time = TextWidth / (((double)VideoWidth + TextWidth)/ (double)duration_marquee); // duration of last char visible on screen
         int s=0;
         if(r.find("[MROW]") != std::string::npos){
@@ -228,7 +228,7 @@ void Ass::WriteToDisk(bool removeBottom){
                 }
             }
             if(!Replaced){
-               // r = "";
+                r = "";
                 Dropped_Rows++;
             }
         }else if(r.find("[TopROW]") != std::string::npos){
